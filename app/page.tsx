@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 장기렌터카 인기 차종 및 월 렌트료 데이터 (예시: 48개월, 무보증 기준)
+  // 장기렌터카 인기 차종 및 월 렌트료 데이터
   const cars = [
     { 
       id: 1, 
@@ -58,12 +58,12 @@ export default function Home() {
               <a href="#" className="hover:text-[#1e3a8a]">장기렌트 혜택</a>
               <a href="#" className="hover:text-[#1e3a8a]">출고 후기</a>
             </nav>
-            <a href="tel:1588-0000" className="bg-[#1e3a8a] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2">
+            <a href="tel:1588-0000" className="bg-[#1e3a8a] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2" title="전화 상담 연결">
               📞 1588-0000
             </a>
           </div>
 
-          <button className="md:hidden text-[#1e3a8a]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-[#1e3a8a]" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="메뉴 열기">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
         </div>
@@ -81,16 +81,17 @@ export default function Home() {
       {/* 2. 장기렌트 특화 메인 히어로 배너 */}
       <section className="mt-16 relative bg-gray-900 text-white">
         <div className="absolute inset-0">
-          <img src="https://picsum.photos/id/1070/1200/800" alt="장기렌터카 배경" className="w-full h-full object-cover opacity-40" />
+          <img src="https://picsum.photos/id/1070/1200/800" alt="차편한 장기렌터카 메인 배경 - 무보증 신차 장기렌트" className="w-full h-full object-cover opacity-40" />
         </div>
         <div className="max-w-6xl mx-auto relative z-10 px-4 py-24 md:py-32 text-center md:text-left flex flex-col items-center md:items-start">
           <div className="inline-block bg-[#1e3a8a] text-white font-bold px-4 py-1 rounded-full mb-4 md:text-lg border border-blue-400">
             신용 심사 완화! 누구나 초기비용 0원 가능
           </div>
-          <h2 className="text-4xl md:text-6xl font-black leading-tight mb-4 drop-shadow-lg">
+          {/* 네이버 SEO 핵심: 사이트의 가장 중요한 제목을 <h1>으로 변경 */}
+          <h1 className="text-4xl md:text-6xl font-black leading-tight mb-4 drop-shadow-lg">
             초기비용 부담 없는<br/>
             <span className="text-yellow-400">신차 장기렌터카</span>
-          </h2>
+          </h1>
           <p className="text-lg md:text-2xl font-medium text-gray-200 mb-8 drop-shadow">
             취등록세·보험료 ZERO / 사업자 100% 비용처리 / 로켓 당일출고
           </p>
@@ -142,13 +143,13 @@ export default function Home() {
           {cars.map((car) => (
             <div key={car.id} className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:-translate-y-1 transition duration-300">
               <div className="relative h-52 bg-gray-200">
-                <img src={car.imageUrl} alt={car.name} className="w-full h-full object-cover" />
+                <img src={car.imageUrl} alt={`${car.name} 장기렌트 특가`} className="w-full h-full object-cover" />
                 <div className="absolute top-0 left-0 bg-[#1e3a8a] text-white px-3 py-1 m-3 rounded font-bold text-sm shadow">
                   {car.category}
                 </div>
               </div>
               <div className="p-6">
-                <h4 className="font-bold text-xl mb-1 text-gray-900">{car.name}</h4>
+                <h3 className="font-bold text-xl mb-1 text-gray-900">{car.name}</h3>
                 <p className="text-sm text-gray-500 mb-4">{car.condition}</p>
                 <div className="text-[#1e3a8a] font-black text-2xl mb-5">{car.price}</div>
                 <a href="#quote-form" className="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">
@@ -164,32 +165,30 @@ export default function Home() {
       <section id="quote-form" className="bg-slate-100 py-20">
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-2xl border border-gray-200">
-            <h3 className="text-3xl font-black text-center mb-3 text-[#1e3a8a]">장기렌트 1:1 맞춤 견적 신청</h3>
+            <h2 className="text-3xl font-black text-center mb-3 text-[#1e3a8a]">장기렌트 1:1 맞춤 견적 신청</h2>
             <p className="text-center text-gray-600 mb-10">간단한 정보만 남겨주시면, 담당 매니저가 전국 최저가 견적을 산출해 드립니다.</p>
             
-            <form name="quote-request" method="POST" data-netlify="true" className="space-y-6">
-              {/* Netlify 연동을 위한 숨김 필드 (필수) */}
-              <input type="hidden" name="form-name" value="quote-request" />
+            <form className="space-y-6">
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <label className="font-bold text-gray-700 text-sm">고객명 / 회사명</label>
-                  <input type="text" name="customer_name" required placeholder="홍길동" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
+                  <label htmlFor="customer_name" className="font-bold text-gray-700 text-sm">고객명 / 회사명</label>
+                  <input type="text" id="customer_name" name="customer_name" required placeholder="홍길동" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-bold text-gray-700 text-sm">연락처</label>
-                  <input type="tel" name="phone_number" required placeholder="010-1234-5678" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
+                  <label htmlFor="phone_number" className="font-bold text-gray-700 text-sm">연락처</label>
+                  <input type="tel" id="phone_number" name="phone_number" required placeholder="010-1234-5678" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-bold text-gray-700 text-sm">관심 차종</label>
-                  <input type="text" name="car_model" required placeholder="예: 그랜저 하이브리드" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
+                  <label htmlFor="car_model" className="font-bold text-gray-700 text-sm">관심 차종</label>
+                  <input type="text" id="car_model" name="car_model" required placeholder="예: 그랜저 하이브리드" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none transition" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                 <div className="space-y-2">
-                  <label className="font-bold text-gray-700 text-sm">희망 렌트 기간</label>
-                  <select name="rent_period" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none text-gray-700">
+                  <label htmlFor="rent_period" className="font-bold text-gray-700 text-sm">희망 렌트 기간</label>
+                  <select id="rent_period" name="rent_period" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none text-gray-700">
                     <option value="48개월">48개월 (가장 인기)</option>
                     <option value="60개월">60개월</option>
                     <option value="36개월">36개월</option>
@@ -197,8 +196,8 @@ export default function Home() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="font-bold text-gray-700 text-sm">초기비용 조건</label>
-                  <select name="initial_cost" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none text-gray-700">
+                  <label htmlFor="initial_cost" className="font-bold text-gray-700 text-sm">초기비용 조건</label>
+                  <select id="initial_cost" name="initial_cost" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-[#1e3a8a] focus:ring-2 focus:ring-blue-100 outline-none text-gray-700">
                     <option value="무보증">무보증 (초기비용 0원)</option>
                     <option value="보증금">보증금 (계약 만료 시 반환)</option>
                     <option value="선납금">선납금 (월 렌트료 낮춤)</option>
@@ -207,11 +206,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* type을 "button"에서 "submit"으로 변경해야 폼이 전송됩니다. */}
               <button type="submit" className="w-full bg-[#1e3a8a] text-white font-black text-xl py-5 rounded-lg hover:bg-blue-900 transition mt-6 shadow-lg">
                 최저가 비교 견적 받기
               </button>
-              </form>
+            </form>
           </div>
         </div>
       </section>
