@@ -168,7 +168,8 @@ export default function Home() {
             <h2 className="text-3xl font-black text-center mb-3 text-[#1e3a8a]">장기렌트 1:1 맞춤 견적 신청</h2>
             <p className="text-center text-gray-600 mb-10">간단한 정보만 남겨주시면, 담당 매니저가 전국 최저가 견적을 산출해 드립니다.</p>
             
-            <form className="space-y-6">
+            <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+  <input type="hidden" name="access_key" value="50577aa5-eb51-4449-a684-21eb81db3918" />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
